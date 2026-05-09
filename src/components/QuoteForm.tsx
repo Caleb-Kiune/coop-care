@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { quoteSchema, type QuoteFormValues } from "@/lib/schema";
 import { calculatePremium } from "@/lib/pricing";
 import { useEffect, useState } from "react";
+import DownloadButton from "./DownloadButton";
 
 export default function QuoteForm() {
   const [premiumTotal, setPremiumTotal] = useState<number>(0);
@@ -164,12 +165,11 @@ export default function QuoteForm() {
           KES {premiumTotal.toLocaleString()}
         </span>
       </div>
-      <button
-        type="submit"
-        className="w-full bg-red-600 text-white font-bold py-4 rounded-md hover:bg-red-700 transition shadow-md"
-      >
-        Generate Quote
-      </button>
+      <DownloadButton
+        data={watch()}
+        premiumTotal={premiumTotal}
+        isValid={Object.keys(errors).length === 0}
+      />
     </form>
   );
 }
