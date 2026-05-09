@@ -10,3 +10,16 @@ export const CIC_RATES = {
     OPTION_3: { base: [3897, 5026, 8061, 10037, 11274, 11883, 12797], additional: 1797 },
   },
 };
+
+export const BENEFIT_LIMITS = {
+  COMPREHENSIVE: {
+    OPTION_1: { inpatient: "100,000", outpatient: "30,000", maternity: "15,000", dental: "5,000", optical: "5,000", lastExpense: "50,000", accommodation: "Ward Bed" },
+    OPTION_2: { inpatient: "200,000", outpatient: "40,000", maternity: "20,000", dental: "5,000", optical: "5,000", lastExpense: "50,000", accommodation: "Ward Bed" },
+    OPTION_3: { inpatient: "300,000", outpatient: "50,000", maternity: "25,000", dental: "7,500", optical: "7,500", lastExpense: "50,000", accommodation: "Ward Bed" },
+  },
+  INPATIENT_ONLY: {
+    OPTION_1: { inpatient: "100,000", outpatient: "N/A", maternity: "N/A", dental: "N/A", optical: "N/A", lastExpense: "50,000", accommodation: "Ward Bed" },
+    OPTION_2: { inpatient: "200,000", outpatient: "N/A", maternity: "N/A", dental: "N/A", optical: "N/A", lastExpense: "50,000", accommodation: "Ward Bed" },
+    OPTION_3: { inpatient: "300,000", outpatient: "N/A", maternity: "N/A", dental: "N/A", optical: "N/A", lastExpense: "50,000", accommodation: "Ward Bed" },
+  },
+};
