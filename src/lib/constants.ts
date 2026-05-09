@@ -1,5 +1,3 @@
-export const POLICY_ADMIN_FEE = 500;
-
 export const CIC_RATES = {
   COMPREHENSIVE: {
     OPTION_1: { base: [7789, 10651, 17031, 21187, 23787, 25068, 26989], additional: 3889 },

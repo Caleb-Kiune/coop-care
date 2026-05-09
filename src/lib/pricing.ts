@@ -1,5 +1,5 @@
 import { QuoteFormValues } from "./schema";
-import { CIC_RATES, POLICY_ADMIN_FEE } from "./constants"; // Importing the separated data
+import { CIC_RATES } from "./constants"; 
 
 export function calculatePremium(
   coverageType: QuoteFormValues["coverageType"],
@@ -7,15 +7,13 @@ export function calculatePremium(
   dependentCount: number
 ): number {
   const tier = CIC_RATES[coverageType][benefitOption];
-  let basePremium = 0;
   
   if (dependentCount <= 6) {
-    basePremium = tier.base[dependentCount];
-  } else {
-    const maxBaseRate = tier.base[6];
-    const extraDependents = dependentCount - 6;
-    basePremium = maxBaseRate + (extraDependents * tier.additional);
-  }
+    return tier.base[dependentCount];
+  } 
   
-  return basePremium + POLICY_ADMIN_FEE; 
+  const maxBaseRate = tier.base[6];
+  const extraDependents = dependentCount - 6;
+  
+  return maxBaseRate + (extraDependents * tier.additional);
 }
