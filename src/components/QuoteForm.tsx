@@ -6,6 +6,7 @@ import { quoteSchema, type QuoteFormValues } from "@/lib/schema";
 import { calculatePremium } from "@/lib/pricing";
 import { useEffect, useState } from "react";
 import DownloadButton from "./DownloadButton";
+import QuoteDrawer from "./QuoteDrawer";
 
 export default function QuoteForm() {
   const [premiumTotal, setPremiumTotal] = useState<number>(0);
@@ -158,6 +159,7 @@ export default function QuoteForm() {
           </p>
         )}
       </div>
+
       {/* STICKY FOOTER PREVIEW */}
       <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
         <span className="text-gray-600 font-medium">Total Premium</span>
@@ -165,6 +167,13 @@ export default function QuoteForm() {
           KES {premiumTotal.toLocaleString()}
         </span>
       </div>
+
+      {/* DRAWER TRIGGER */}
+      <div className="flex justify-center pb-2">
+        <QuoteDrawer data={watch()} premiumTotal={premiumTotal} />
+      </div>
+
+      {/* PDF DOWNLOAD BUTTON */}
       <DownloadButton
         data={watch()}
         premiumTotal={premiumTotal}
