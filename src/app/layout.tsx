@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import ServiceWorkerRegister from "@/components/ServiceWorkerRegister"; 
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import PwaUpdater from "@/components/PwaUpdater";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ServiceWorkerRegister />
+        <PwaUpdater />
         {children}
       </body>
     </html>
