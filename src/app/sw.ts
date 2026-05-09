@@ -10,8 +10,15 @@ declare global {
 
 declare const self: ServiceWorkerGlobalScope;
 
+const manifest = self.__SW_MANIFEST || [];
+
+manifest.push({
+  url: "/",
+  revision: "bimaswift-core-v1", 
+});
+
 const serwist = new Serwist({
-  precacheEntries: self.__SW_MANIFEST,
+  precacheEntries: manifest,
   skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
