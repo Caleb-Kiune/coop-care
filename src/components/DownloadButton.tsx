@@ -1,14 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { QuoteFormValues } from "@/lib/schema";
-
-const PDFDownloadLink = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
-  { ssr: false }
-);
-
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import QuoteDocument from "./QuoteDocument";
+import { QuoteFormValues } from "@/lib/schema";
 
 interface DownloadButtonProps {
   data: QuoteFormValues;
@@ -34,4 +28,4 @@ export default function DownloadButton({ data, premiumTotal, isValid }: Download
       {({ loading }) => (loading ? "Generating PDF..." : "Download Official Quote")}
     </PDFDownloadLink>
   );
-}              
+}

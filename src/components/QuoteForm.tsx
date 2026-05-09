@@ -5,8 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { quoteSchema, type QuoteFormValues } from "@/lib/schema";
 import { calculatePremium } from "@/lib/pricing";
 import { useEffect, useState } from "react";
-import DownloadButton from "./DownloadButton";
 import QuoteDrawer from "./QuoteDrawer";
+import dynamic from "next/dynamic";
+
+const DownloadButton = dynamic(() => import("./DownloadButton"), { ssr: false });
 
 export default function QuoteForm() {
   const [premiumTotal, setPremiumTotal] = useState<number>(0);

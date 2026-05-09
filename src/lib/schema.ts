@@ -9,8 +9,8 @@ export const quoteSchema = z.object({
   benefitOption: z.enum(["OPTION_1", "OPTION_2", "OPTION_3"]),
   dependentCount: z.number().int().min(0, "Dependents cannot be negative"),
   eligibilityConfirmed: z.literal(true, {
-    errorMap: () => ({ message: "You must confirm age eligibility before proceeding." }),
-  }),
+    message: "You must confirm age eligibility before proceeding.",
+  }),  
 });
 
 export type QuoteFormValues = z.infer<typeof quoteSchema>;
