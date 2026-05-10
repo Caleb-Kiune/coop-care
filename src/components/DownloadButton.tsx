@@ -1,9 +1,9 @@
 "use client";
 
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
 import QuoteDocument from "./QuoteDocument";
 import { QuoteFormValues } from "@/lib/schema";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PremiumBreakdown } from "@/lib/pricing";
 
 interface DownloadButtonProps {
@@ -13,16 +13,33 @@ interface DownloadButtonProps {
 }
 
 export default function DownloadButton({ data, premiumBreakdown, isValid }: DownloadButtonProps) {
-  const [debouncedData, setDebouncedData] = useState(data);
-  const [debouncedBreakdown, setDebouncedBreakdown] = useState(premiumBreakdown);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedData(data);
-      setDebouncedBreakdown(premiumBreakdown);
-    }, 500);
-    return () => clearTimeout(handler);
-  }, [data, premiumBreakdown]);
+  const handleGenerateAndDownload = async () => {
+    setIsGenerating(true);
+    
+    try {
+      const blob = await pdf(
+        <QuoteDocument data={data} premiumBreakdown={premiumBreakdown} />
+      ).toBlob();
+      
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `CoopCare-Quote-${data.clientName ? data.clientName.replace(/\s+/g, '-') : 'Standard'}.pdf`;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error("Failed to generate PDF", error);
+      alert("There was an error generating the document.");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   if (!isValid) {
     return (
@@ -33,12 +50,14 @@ export default function DownloadButton({ data, premiumBreakdown, isValid }: Down
   }
 
   return (
-    <PDFDownloadLink
-      document={<QuoteDocument data={debouncedData} premiumBreakdown={debouncedBreakdown} />}
-      fileName={`CoopCare-Quote-${debouncedData.clientName ? debouncedData.clientName.replace(/\s+/g, '-') : 'Standard'}.pdf`}
-      className="block w-full text-center bg-red-600 text-white font-bold py-4 rounded-md hover:bg-red-700 transition shadow-md"
+    <button
+      onClick={handleGenerateAndDownload}
+      disabled={isGenerating}
+      className={`block w-full text-center font-bold py-4 rounded-md transition shadow-md ${
+        isGenerating ? "bg-red-400 cursor-wait" : "bg-red-600 hover:bg-red-700 text-white"
+      }`}
     >
-      {({ loading }) => (loading ? "Generating PDF..." : "Download Official Quote")}
-    </PDFDownloadLink>
+      {isGenerating ? "Compiling Document..." : "Download Official Quote"}
+    </button>
   );
 }
