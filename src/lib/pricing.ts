@@ -25,8 +25,8 @@ export function calculatePremium(
     basePremium = maxBaseRate + (extraDependents * tier.additional);
   }
 
-  const trainingLevy = basePremium * STATUTORY_LEVIES.TRAINING_LEVY_RATE;
-  const phcf = basePremium * STATUTORY_LEVIES.PHCF_RATE;
+  const trainingLevy = Math.round(basePremium * STATUTORY_LEVIES.TRAINING_LEVY_RATE);
+  const phcf = Math.round(basePremium * STATUTORY_LEVIES.PHCF_RATE);
   const stampDuty = STATUTORY_LEVIES.STAMP_DUTY;
   
   const totalPremium = basePremium + trainingLevy + phcf + stampDuty;
