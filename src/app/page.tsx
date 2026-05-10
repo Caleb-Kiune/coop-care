@@ -24,7 +24,7 @@ export default function Home() {
             <h1 className="text-xl font-extrabold text-gray-900 tracking-tight leading-none">
               Coop Care
             </h1>
-            <span className="text-[10px] font-bold tracking-widest text-red-600 uppercase mt-1.5">
+            <span className="text-[10px] font-bold tracking-widest text-cic-red uppercase mt-1.5">
               Premium Calculator
             </span>
           </div>

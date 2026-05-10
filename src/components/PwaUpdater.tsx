@@ -48,7 +48,7 @@ export default function PwaUpdater() {
       <span className="text-sm font-medium">New rates/update available.</span>
       <button 
         onClick={reloadPage}
-        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-bold transition"
+        className="bg-cic-red hover:bg-cic-red-dark text-white px-4 py-2 rounded-md text-sm font-bold transition"
       >
         Refresh App
       </button>

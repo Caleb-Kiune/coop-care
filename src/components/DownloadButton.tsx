@@ -49,7 +49,7 @@ export default function DownloadButton({ roster, premiumBreakdown }: DownloadBut
       onClick={handleGenerateAndDownload}
       disabled={isDisabled}
       className={`block w-full text-center font-bold py-4 rounded-md transition shadow-md ${
-        isDisabled ? "bg-gray-400 text-white cursor-not-allowed" : "bg-red-600 hover:bg-red-700 text-white"
+        isDisabled ? "bg-gray-400 text-white cursor-not-allowed" : "bg-cic-red hover:bg-cic-red-dark text-white"
       }`}
     >
       {isGenerating ? "Compiling Document..." : "Download Official Group Quote"}

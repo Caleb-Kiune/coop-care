@@ -22,7 +22,7 @@ export default function QuoteDrawer({ data }: QuoteDrawerProps) {
       
       {/* TRIGGER */}
       <Drawer.Trigger asChild>
-        <button type="button" className="text-sm font-semibold text-red-600 underline hover:text-red-800 transition py-2">
+        <button type="button" className="text-sm font-semibold text-cic-red underline hover:text-cic-red-dark transition py-2">
           View Benefit Limits
         </button>
       </Drawer.Trigger>
@@ -38,7 +38,7 @@ export default function QuoteDrawer({ data }: QuoteDrawerProps) {
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-6" />
             
             <div className="max-w-md mx-auto w-full">
-              <Drawer.Title className="font-bold text-2xl text-gray-900 mb-2">
+              <Drawer.Title className="font-bold text-2xl text-cic-text mb-2">
                 Benefit Limits
               </Drawer.Title>
 
