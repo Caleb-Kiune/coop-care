@@ -4,9 +4,9 @@ import { Drawer } from "vaul";
 import { RosterMember } from "@/lib/schema";
 import { PremiumBreakdown } from "@/lib/pricing";
 import { formatMemberPlan, formatDependents } from "@/lib/formatters";
-import { Trash2, ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { Trash2 } from "lucide-react";
 import dynamic from "next/dynamic";
+import TermsDrawer from "./TermsDrawer";
 
 const DownloadButton = dynamic(() => import("./DownloadButton"), { ssr: false });
 
@@ -17,8 +17,6 @@ interface GroupQuoteDrawerProps {
 }
 
 export default function GroupQuoteDrawer({ roster, premiumBreakdown, onRemoveMember }: GroupQuoteDrawerProps) {
-  const [termsOpen, setTermsOpen] = useState(false);
-
   return (
     <Drawer.Root>
       <Drawer.Trigger asChild>
@@ -113,110 +111,7 @@ export default function GroupQuoteDrawer({ roster, premiumBreakdown, onRemoveMem
                 </>
               )}
 
-              {/* UNDERWRITING TERMS & EXCLUSIONS */}
-              <div className="mb-6 border border-gray-200 rounded-lg overflow-hidden">
-                <button
-                  type="button"
-                  onClick={() => setTermsOpen(prev => !prev)}
-                  className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 text-sm font-semibold text-cic-text hover:bg-gray-100 transition"
-                >
-                  <span>Underwriting Terms &amp; Exclusions</span>
-                  <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${termsOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {termsOpen && (
-                  <div className="px-4 py-4 text-xs text-gray-600 space-y-4 leading-relaxed bg-white border-t border-gray-200">
-
-                    {/* SPECIAL TERMS */}
-                    <div>
-                      <h4 className="font-bold text-sm text-cic-text mb-2">Special Terms</h4>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Waiting Periods</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>No waiting period for accident-related admissions.</li>
-                        <li>1 year for pre-existing &amp; chronic conditions treatment.</li>
-                        <li>10 months for maternity and maternity-related treatment.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Age Eligibility</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Principal member &amp; spouse: up to 70 years.</li>
-                        <li>Children: from birth (full term, 37 weeks) to 18 years; up to 25 years with proof of enrolment from learning institution.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">General Conditions</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Geographical limit: Kenya only.</li>
-                        <li>Lodging facilities for parent accompanying a child below 12 years being admitted.</li>
-                        <li>Access strictly within the designated panel provided.</li>
-                        <li>Service access via photo cards. Replacement for lost/damaged card: KES 300 per card.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Minimum Group Size</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Minimum 4 members required to activate a group policy.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Dental Benefits</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Fillings, root canal, X-rays.</li>
-                        <li>Polishing &amp; scaling necessitated by a prevailing medical condition and authorized by a doctor.</li>
-                        <li>Tooth extractions (including surgical) with anesthetics fees.</li>
-                        <li>Decay treatment &amp; accidental dental injury.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Optical Benefits</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Eye treatment, consultation &amp; testing.</li>
-                        <li>Accidental eye injury.</li>
-                        <li>Treatment arising from disease affecting the eye or optical nerve.</li>
-                        <li>Prescribed spectacles from approved optician — limited to one pair every two years.</li>
-                      </ul>
-                    </div>
-
-                    <hr className="border-gray-200" />
-
-                    {/* EXCLUSIONS */}
-                    <div>
-                      <h4 className="font-bold text-sm text-cic-text mb-2">Exclusions</h4>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Non-Medical &amp; Cosmetic</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Cosmetic surgery, beauty treatments, weight loss programs, and nature/spa therapies.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Non-Standard or Unapproved Care</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Experimental treatments, alternative therapies (e.g. acupuncture, herbalists), unregistered practitioners, and self-prescribed/self-referred care.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Lifestyle &amp; Personal Risk</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Injuries from hazardous sports, riots, war, military service, and nuclear/radioactive exposure.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Maternity, Infertility &amp; Family Planning</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Infertility treatments for both dependents and main members.</li>
-                        <li>Pregnancy-related costs for dependents.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Devices, Equipment, Dental &amp; Optical</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>External surgical appliances, diagnostic tools (glucometers, BP machines, hearing aids).</li>
-                        <li>Optical: Plano prescriptions, ±0.25 prescriptions, photochromatic lenses, antiglare coatings &amp; laser correction.</li>
-                        <li>Dental: scaling, crowns, bridges, orthodontics, and dentures.</li>
-                      </ul>
-
-                      <p className="font-semibold text-gray-700 mt-3 mb-1">Other Insurance &amp; Non-Panel Providers</p>
-                      <ul className="list-disc pl-4 space-y-1">
-                        <li>Costs recoverable under other insurance (e.g. SHA, GPA, WIBA).</li>
-                        <li>Services from non-designated hospitals or doctors.</li>
-                      </ul>
-                    </div>
-
-                  </div>
-                )}
-              </div>
+              <TermsDrawer />
 
               <DownloadButton roster={roster} premiumBreakdown={premiumBreakdown} />
               <Drawer.Close asChild>
