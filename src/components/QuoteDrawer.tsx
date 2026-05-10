@@ -3,14 +3,12 @@
 import { Drawer } from "vaul";
 import { QuoteFormValues } from "@/lib/schema";
 import { BENEFIT_LIMITS } from "@/lib/constants";
-import { PremiumBreakdown } from "@/lib/pricing";
 
 interface QuoteDrawerProps {
   data: QuoteFormValues;
-  premiumBreakdown: PremiumBreakdown | null;
 }
 
-export default function QuoteDrawer({ data, premiumBreakdown }: QuoteDrawerProps) {
+export default function QuoteDrawer({ data }: QuoteDrawerProps) {
   // Safe check: Ensure both fields are actually selected
   const isSelectionComplete = data.coverageType && data.benefitOption;
   
@@ -25,7 +23,7 @@ export default function QuoteDrawer({ data, premiumBreakdown }: QuoteDrawerProps
       {/* TRIGGER */}
       <Drawer.Trigger asChild>
         <button type="button" className="text-sm font-semibold text-red-600 underline hover:text-red-800 transition py-2">
-          Preview Quote Breakdown
+          View Benefit Limits
         </button>
       </Drawer.Trigger>
 
@@ -41,7 +39,7 @@ export default function QuoteDrawer({ data, premiumBreakdown }: QuoteDrawerProps
             
             <div className="max-w-md mx-auto w-full">
               <Drawer.Title className="font-bold text-2xl text-gray-900 mb-2">
-                Quote Preview
+                Benefit Limits
               </Drawer.Title>
 
               {!isSelectionComplete ? (
@@ -98,40 +96,6 @@ export default function QuoteDrawer({ data, premiumBreakdown }: QuoteDrawerProps
                   </div>
                 </>
               )}
-
-              {/* PREMIUM BREAKDOWN */}
-              {premiumBreakdown && (
-                <div className="mb-6 space-y-2 px-2">
-                  <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase">Premium Breakdown</h3>
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>Base Premium</span>
-                    <span className="font-medium text-gray-900">KES {premiumBreakdown.basePremium.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>Training Levy (0.2%)</span>
-                    <span className="font-medium text-gray-900">KES {premiumBreakdown.trainingLevy.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>PHCF (0.25%)</span>
-                    <span className="font-medium text-gray-900">KES {premiumBreakdown.phcf.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-600">
-                    <span>Stamp Duty</span>
-                    <span className="font-medium text-gray-900">KES {premiumBreakdown.stampDuty.toLocaleString()}</span>
-                  </div>
-                </div>
-              )}
-
-              {/* REITERATE THE TOTAL IN THE DRAWER */}
-              <div className="p-5 bg-red-50 rounded-xl flex justify-between items-center border border-red-100">
-                <div>
-                  <span className="block text-sm font-semibold text-red-900">Total Premium</span>
-                  <span className="block text-xs text-red-700 mt-1">
-                    Principal + {data.dependentCount || 0} Dependents
-                  </span>
-                </div>
-                <span className="font-bold text-xl text-red-600">KES {premiumBreakdown?.totalPremium.toLocaleString() ?? "0"}</span>
-              </div>
               
               {/* CLOSE BUTTON */}
               <Drawer.Close asChild>

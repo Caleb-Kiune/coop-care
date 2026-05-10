@@ -2,17 +2,16 @@
 
 import { pdf } from "@react-pdf/renderer";
 import QuoteDocument from "./QuoteDocument";
-import { QuoteFormValues } from "@/lib/schema";
+import { RosterMember } from "@/lib/schema";
 import { useState } from "react";
 import { PremiumBreakdown } from "@/lib/pricing";
 
 interface DownloadButtonProps {
-  data: QuoteFormValues;
+  roster: RosterMember[];
   premiumBreakdown: PremiumBreakdown | null;
-  isValid: boolean;
 }
 
-export default function DownloadButton({ data, premiumBreakdown, isValid }: DownloadButtonProps) {
+export default function DownloadButton({ roster, premiumBreakdown }: DownloadButtonProps) {
   const [isGenerating, setIsGenerating] = useState(false);
 
   const handleGenerateAndDownload = async () => {
@@ -20,13 +19,15 @@ export default function DownloadButton({ data, premiumBreakdown, isValid }: Down
     
     try {
       const blob = await pdf(
-        <QuoteDocument data={data} premiumBreakdown={premiumBreakdown} />
+        <QuoteDocument roster={roster} premiumBreakdown={premiumBreakdown} />
       ).toBlob();
       
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `CoopCare-Quote-${data.clientName ? data.clientName.replace(/\s+/g, '-') : 'Standard'}.pdf`;
+      
+      const clientName = roster[0]?.clientName ? roster[0].clientName.replace(/\s+/g, '-') : 'Group';
+      link.download = `CoopCare-${clientName}-Quote.pdf`;
       
       document.body.appendChild(link);
       link.click();
@@ -41,23 +42,17 @@ export default function DownloadButton({ data, premiumBreakdown, isValid }: Down
     }
   };
 
-  if (!isValid) {
-    return (
-      <button disabled className="w-full bg-gray-400 text-white font-bold py-4 rounded-md shadow-md cursor-not-allowed">
-        Fill Form to Generate Quote
-      </button>
-    );
-  }
+  const isDisabled = isGenerating || roster.length === 0;
 
   return (
     <button
       onClick={handleGenerateAndDownload}
-      disabled={isGenerating}
+      disabled={isDisabled}
       className={`block w-full text-center font-bold py-4 rounded-md transition shadow-md ${
-        isGenerating ? "bg-red-400 cursor-wait" : "bg-red-600 hover:bg-red-700 text-white"
+        isDisabled ? "bg-gray-400 text-white cursor-not-allowed" : "bg-red-600 hover:bg-red-700 text-white"
       }`}
     >
-      {isGenerating ? "Compiling Document..." : "Download Official Quote"}
+      {isGenerating ? "Compiling Document..." : "Download Official Group Quote"}
     </button>
   );
 }

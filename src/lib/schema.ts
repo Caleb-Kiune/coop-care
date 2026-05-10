@@ -16,3 +16,8 @@ export const quoteSchema = z.object({
 });
 
 export type QuoteFormValues = z.infer<typeof quoteSchema>;
+
+export interface RosterMember extends QuoteFormValues {
+  id: string;
+  basePremium: number;
+}
