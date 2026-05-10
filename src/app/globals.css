@@ -16,6 +16,11 @@
   --color-cic-red-border: #FECACA;
   --color-cic-text: #111111;
 
+  /* Amber palette */ 
+  --color-amber-50: #FFFBEB;
+  --color-amber-200: #FDE68A;
+  --color-amber-800: #92400E;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

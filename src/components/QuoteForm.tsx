@@ -4,16 +4,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { quoteSchema, type QuoteFormValues, type RosterMember } from "@/lib/schema";
 import { calculateBasePremium, calculateGroupPremium } from "@/lib/pricing";
-import { useEffect, useState, useRef } from "react";
-import { Info } from "lucide-react";
+import { useEffect, useState } from "react";
 import QuoteDrawer from "./QuoteDrawer";
 import GroupQuoteDrawer from "./GroupQuoteDrawer";
 
 export default function QuoteForm() {
   const [roster, setRoster] = useState<RosterMember[]>([]);
   const [draftBasePremium, setDraftBasePremium] = useState<number>(0);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+
 
   const {
     register,
@@ -45,20 +43,7 @@ export default function QuoteForm() {
     }
   }, [currentCoverage, currentOption, currentDependents]);
 
-  useEffect(() => {
-    if (!tooltipOpen) return;
-    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
-      if (tooltipRef.current && !tooltipRef.current.contains(e.target as Node)) {
-        setTooltipOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("touchstart", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("touchstart", handleOutsideClick);
-    };
-  }, [tooltipOpen]);
+
 
   const onSubmit = (data: QuoteFormValues) => {
     const basePremium = calculateBasePremium(data.coverageType!, data.benefitOption!, data.dependentCount);
@@ -132,32 +117,17 @@ export default function QuoteForm() {
           </div>
         </div>
 
-        {/* DEPENDENTS — with (i) tooltip */}
+        {/* DEPENDENTS */}
         <div>
-          <div className="flex items-center gap-1.5 mb-2">
-            <label className="block text-sm font-medium text-cic-text">Number of Dependents (M+)</label>
-            <div ref={tooltipRef} className="relative">
-              <button
-                type="button"
-                onClick={() => setTooltipOpen(prev => !prev)}
-                className="text-gray-400 hover:text-cic-red transition"
-                aria-label="Eligibility information"
-              >
-                <Info size={15} />
-              </button>
-              {tooltipOpen && (
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 w-56 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-lg z-50 leading-relaxed">
-                  Assumes principal is under 70 &amp; dependents meet standard age limits.
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full w-0 h-0 border-x-[6px] border-x-transparent border-t-[6px] border-t-gray-900" />
-                </div>
-              )}
-            </div>
-          </div>
+          <label className="block text-sm font-medium text-cic-text mb-2">Number of Dependents (M+)</label>
           <div className="flex items-center justify-between border border-gray-300 rounded-md p-2">
             <button type="button" onClick={() => setValue("dependentCount", Math.max(0, currentDependents - 1))} className="w-12 h-12 flex items-center justify-center bg-gray-100 text-gray-700 font-bold text-xl rounded hover:bg-gray-200 transition">-</button>
             <span className="text-2xl font-bold text-cic-text w-12 text-center">{currentDependents}</span>
             <button type="button" onClick={() => setValue("dependentCount", currentDependents + 1)} className="w-12 h-12 flex items-center justify-center bg-gray-100 text-gray-700 font-bold text-xl rounded hover:bg-gray-200 transition">+</button>
           </div>
+          <p className="text-xs text-gray-400 mt-2 leading-relaxed">
+            Eligibility: Principal &amp; spouse up to 70 yrs. Dependents must meet standard age limits.
+          </p>
         </div>
 
         {/* CONDENSED DRAFT PREMIUM ROW */}
