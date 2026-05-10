@@ -17,8 +17,8 @@ export default function TermsDrawer() {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[60]" />
         
-        <Drawer.Content className="bg-white flex flex-col rounded-t-[20px] mt-24 h-[85vh] fixed bottom-0 left-0 right-0 z-[70]">
-          <div className="p-6 bg-white rounded-t-[20px] flex-1 overflow-y-auto">
+        <Drawer.Content className="bg-white flex flex-col rounded-t-[20px] mt-24 h-[85vh] fixed bottom-0 left-0 right-0 mx-auto max-w-[31rem] w-full z-[70] shadow-2xl border border-gray-200">
+          <div className="p-6 bg-white rounded-t-[20px] flex-1 overflow-y-auto scrollbar-hide">
             
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mb-6" />
             
