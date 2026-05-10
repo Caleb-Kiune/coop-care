@@ -9,7 +9,7 @@ export default function TermsDrawer() {
       <div className="mb-6">
         <Drawer.Trigger asChild>
           <button type="button" className="text-sm font-semibold text-cic-red underline hover:text-cic-red-dark transition">
-            View Underwriting Terms &amp; Exclusions
+            View Terms &amp; Exclusions
           </button>
         </Drawer.Trigger>
       </div>

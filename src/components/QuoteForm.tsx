@@ -126,9 +126,9 @@ export default function QuoteForm() {
             <button type="button" onClick={() => setValue("dependentCount", currentDependents + 1)} className="w-12 h-12 flex items-center justify-center bg-gray-100 text-gray-700 font-bold text-xl rounded hover:bg-gray-200 transition">+</button>
           </div>
           <p className="text-xs text-gray-400 mt-2 leading-relaxed">
-            Eligibility: Principal &amp; spouse up to 70 yrs. Dependents must meet standard age limits.
+            Eligibility: Principal/Spouse ≤ 70 yrs. Standard dependent rules apply.
           </p>
-        </div>
+        </div> 
 
         {/* CONDENSED DRAFT PREMIUM ROW */}
         <div className="flex items-center justify-between border-t border-gray-200 pt-4">

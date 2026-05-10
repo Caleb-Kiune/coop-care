@@ -23,7 +23,7 @@ export default function QuoteDrawer({ data }: QuoteDrawerProps) {
       {/* TRIGGER */}
       <Drawer.Trigger asChild>
         <button type="button" className="text-sm font-semibold text-cic-red underline hover:text-cic-red-dark transition py-2">
-          View Benefit Limits
+          View Benefits
         </button>
       </Drawer.Trigger>
 
