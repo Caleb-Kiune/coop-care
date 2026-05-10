@@ -14,10 +14,10 @@ const manifest = self.__SW_MANIFEST || [];
 
 manifest.push({
   url: "/",
-  revision: "bimaswift-core-v1", 
+  revision: "cic-coopcare-v2", 
 });
 
-const serwist = new Serwist({
+const serwist = new Serwist({ 
   precacheEntries: manifest,
   skipWaiting: true,
   clientsClaim: true,

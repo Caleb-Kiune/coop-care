@@ -7,7 +7,7 @@ import PwaUpdater from "@/components/PwaUpdater";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BimaSwift: Coop Care",
+  title: "CIC: Coop Care",
   description: "Offline premium calculator and quote generator.",
   manifest: "/manifest.json",
 };
