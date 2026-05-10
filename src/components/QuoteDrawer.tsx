@@ -3,13 +3,14 @@
 import { Drawer } from "vaul";
 import { QuoteFormValues } from "@/lib/schema";
 import { BENEFIT_LIMITS } from "@/lib/constants";
+import { PremiumBreakdown } from "@/lib/pricing";
 
 interface QuoteDrawerProps {
   data: QuoteFormValues;
-  premiumTotal: number;
+  premiumBreakdown: PremiumBreakdown | null;
 }
 
-export default function QuoteDrawer({ data, premiumTotal }: QuoteDrawerProps) {
+export default function QuoteDrawer({ data, premiumBreakdown }: QuoteDrawerProps) {
   // Safe check: Ensure both fields are actually selected
   const isSelectionComplete = data.coverageType && data.benefitOption;
   
@@ -98,6 +99,29 @@ export default function QuoteDrawer({ data, premiumTotal }: QuoteDrawerProps) {
                 </>
               )}
 
+              {/* PREMIUM BREAKDOWN */}
+              {premiumBreakdown && (
+                <div className="mb-6 space-y-2 px-2">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase">Premium Breakdown</h3>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Base Premium</span>
+                    <span className="font-medium text-gray-900">KES {premiumBreakdown.basePremium.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Training Levy (0.2%)</span>
+                    <span className="font-medium text-gray-900">KES {premiumBreakdown.trainingLevy.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>PHCF (0.25%)</span>
+                    <span className="font-medium text-gray-900">KES {premiumBreakdown.phcf.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Stamp Duty</span>
+                    <span className="font-medium text-gray-900">KES {premiumBreakdown.stampDuty.toLocaleString()}</span>
+                  </div>
+                </div>
+              )}
+
               {/* REITERATE THE TOTAL IN THE DRAWER */}
               <div className="p-5 bg-red-50 rounded-xl flex justify-between items-center border border-red-100">
                 <div>
@@ -106,7 +130,7 @@ export default function QuoteDrawer({ data, premiumTotal }: QuoteDrawerProps) {
                     Principal + {data.dependentCount || 0} Dependents
                   </span>
                 </div>
-                <span className="font-bold text-xl text-red-600">KES {premiumTotal.toLocaleString()}</span>
+                <span className="font-bold text-xl text-red-600">KES {premiumBreakdown?.totalPremium.toLocaleString() ?? "0"}</span>
               </div>
               
               {/* CLOSE BUTTON */}

@@ -23,3 +23,9 @@ export const BENEFIT_LIMITS = {
     OPTION_3: { inpatient: "300,000", outpatient: "N/A", maternity: "N/A", dental: "N/A", optical: "N/A", lastExpense: "50,000", accommodation: "Ward Bed" },
   },
 };
+
+export const STATUTORY_LEVIES = {
+  TRAINING_LEVY_RATE: 0.002,
+  PHCF_RATE: 0.0025,
+  STAMP_DUTY: 40,
+};

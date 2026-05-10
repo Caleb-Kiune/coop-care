@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { quoteSchema, type QuoteFormValues } from "@/lib/schema";
-import { calculatePremium } from "@/lib/pricing";
+import { calculatePremium, PremiumBreakdown } from "@/lib/pricing";
 import { useEffect, useState } from "react";
 import QuoteDrawer from "./QuoteDrawer";
 import dynamic from "next/dynamic";
@@ -11,7 +11,7 @@ import dynamic from "next/dynamic";
 const DownloadButton = dynamic(() => import("./DownloadButton"), { ssr: false });
 
 export default function QuoteForm() {
-  const [premiumTotal, setPremiumTotal] = useState<number>(0);
+  const [premiumBreakdown, setPremiumBreakdown] = useState<PremiumBreakdown | null>(null);
 
   const {
     register,
@@ -35,10 +35,10 @@ export default function QuoteForm() {
 
   useEffect(() => {
     if (currentCoverage && currentOption && currentDependents !== undefined) {
-      const total = calculatePremium(currentCoverage, currentOption, currentDependents);
-      setPremiumTotal(total);
+      const breakdown = calculatePremium(currentCoverage, currentOption, currentDependents);
+      setPremiumBreakdown(breakdown);
     } else {
-      setPremiumTotal(0); 
+      setPremiumBreakdown(null); 
     }
   }, [currentCoverage, currentOption, currentDependents]);
 
@@ -122,14 +122,14 @@ export default function QuoteForm() {
       {/* STICKY FOOTER PREVIEW */}
       <div className="pt-4 border-t border-gray-200 flex justify-between items-center">
         <span className="text-gray-900 font-bold">Total Premium</span>
-        <span className="text-2xl font-bold text-red-600">KES {premiumTotal.toLocaleString()}</span>
+        <span className="text-2xl font-bold text-red-600">KES {premiumBreakdown?.totalPremium.toLocaleString() ?? "0"}</span>
       </div>
 
       <div className="flex justify-center pb-2">
-        <QuoteDrawer data={watch()} premiumTotal={premiumTotal} />
+        <QuoteDrawer data={watch()} premiumBreakdown={premiumBreakdown} />
       </div>
 
-      <DownloadButton data={watch()} premiumTotal={premiumTotal} isValid={isFormComplete} />
+      <DownloadButton data={watch()} premiumBreakdown={premiumBreakdown} isValid={isFormComplete} />
     </form>
   );
 }

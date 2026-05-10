@@ -1,6 +1,7 @@
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { QuoteFormValues } from '@/lib/schema';
 import { BENEFIT_LIMITS } from '@/lib/constants';
+import { PremiumBreakdown } from '@/lib/pricing';
 
 const styles = StyleSheet.create({
   page: { flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 40, fontFamily: 'Helvetica' },
@@ -23,10 +24,10 @@ const styles = StyleSheet.create({
 
 interface QuoteDocumentProps {
   data: QuoteFormValues;
-  premiumTotal: number;
+  premiumBreakdown: PremiumBreakdown | null;
 }
 
-export default function QuoteDocument({ data, premiumTotal }: QuoteDocumentProps) {
+export default function QuoteDocument({ data, premiumBreakdown }: QuoteDocumentProps) {
 
   const safeCoverage = data.coverageType || "COMPREHENSIVE";
   const safeOption = data.benefitOption || "OPTION_1";
@@ -97,10 +98,33 @@ export default function QuoteDocument({ data, premiumTotal }: QuoteDocumentProps
           </View>
         </View>
 
+        {/* PREMIUM BREAKDOWN */}
+        {premiumBreakdown && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Premium Breakdown</Text>
+            <View style={styles.row}>
+              <Text style={styles.label}>Base Premium</Text>
+              <Text style={styles.value}>KES {premiumBreakdown.basePremium.toLocaleString()}</Text>
+            </View>
+            <View style={styles.rowAlt}>
+              <Text style={styles.label}>Training Levy (0.2%)</Text>
+              <Text style={styles.value}>KES {premiumBreakdown.trainingLevy.toLocaleString()}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.label}>PHCF (0.25%)</Text>
+              <Text style={styles.value}>KES {premiumBreakdown.phcf.toLocaleString()}</Text>
+            </View>
+            <View style={styles.rowAlt}>
+              <Text style={styles.label}>Stamp Duty</Text>
+              <Text style={styles.value}>KES {premiumBreakdown.stampDuty.toLocaleString()}</Text>
+            </View>
+          </View>
+        )}
+
         {/* THE BOTTOM LINE */}
         <View style={styles.totalBox}>
           <Text style={styles.totalLabel}>Total Annual Premium</Text>
-          <Text style={styles.totalValue}>KES {premiumTotal.toLocaleString()}</Text>
+          <Text style={styles.totalValue}>KES {premiumBreakdown?.totalPremium.toLocaleString() ?? "0"}</Text>
         </View>
 
         {/* FOOTER */}
