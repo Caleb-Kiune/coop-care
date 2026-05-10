@@ -129,7 +129,7 @@ export default function QuoteForm() {
 
         {/* CONDENSED DRAFT PREMIUM ROW */}
         <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-          <span className="text-sm font-semibold text-gray-600">Draft Base Premium</span>
+          <span className="text-sm font-semibold text-gray-600">Base Premium</span>
           <div className="flex items-center gap-3">
             <span className="text-lg font-bold text-cic-red">
               KES {draftBasePremium.toLocaleString()}

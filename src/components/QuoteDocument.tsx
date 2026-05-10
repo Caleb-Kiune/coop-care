@@ -93,7 +93,7 @@ export default function QuoteDocument({ roster, premiumBreakdown }: QuoteDocumen
         {/* PREMIUM BREAKDOWN */}
         {premiumBreakdown && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Aggregate Premium Breakdown</Text>
+            <Text style={styles.sectionTitle}>Premium Breakdown</Text>
             <View style={styles.row}>
               <Text style={styles.label}>Total Base Premium</Text>
               <Text style={styles.value}>KES {premiumBreakdown.basePremium.toLocaleString()}</Text>

@@ -84,7 +84,7 @@ export default function GroupQuoteDrawer({ roster, premiumBreakdown, onRemoveMem
 
                   {/* PREMIUM BREAKDOWN */}
                   <div className="mb-6 space-y-2 px-2">
-                    <h3 className="font-semibold text-cic-text mb-3 text-sm uppercase">Aggregate Breakdown</h3>
+                    <h3 className="font-semibold text-cic-text mb-3 text-sm uppercase">Premium Breakdown</h3>
                     <div className="flex justify-between text-sm text-gray-600">
                       <span>Total Base Premium</span>
                       <span className="font-medium text-cic-text">KES {premiumBreakdown.basePremium.toLocaleString()}</span>
