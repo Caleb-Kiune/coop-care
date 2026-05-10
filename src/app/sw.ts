@@ -19,10 +19,19 @@ manifest.push({
 
 const serwist = new Serwist({ 
   precacheEntries: manifest,
-  skipWaiting: true,
   clientsClaim: true,
   navigationPreload: true,
   runtimeCaching: defaultCache,
+  fallbacks: {
+    entries: [
+      {
+        url: "/",
+        matcher({ request }) {
+          return request.destination === "document";
+        },
+      },
+    ],
+  },
 });
 
 serwist.addEventListeners();
